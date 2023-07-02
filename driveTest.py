@@ -2,7 +2,7 @@ from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from datetime import datetime, timedelta
 
-gauth = GoogleAuth(settings_file='C:\\Users\\Chris\\Documents\\Semester_8\\Bundesgartenschau\\settings.yaml')
+gauth = GoogleAuth(settings_file='/wetter-screen/driveData/settings.yaml')
 #gauth.DEFAULT_SETTINGS['client_config_file'] = 'C:\\Users\\Chris\\Documents\\Semester_8\\Bundesgartenschau\\Credentials.json'
 drive = GoogleDrive(gauth)
 
