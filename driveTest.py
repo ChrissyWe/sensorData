@@ -1,25 +1,22 @@
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
+import time
+
+import pandas as pd
 from datetime import datetime, timedelta
+import os
 
-gauth = GoogleAuth(settings_file='/wetter-screen/driveData/settings.yaml')
-#gauth.DEFAULT_SETTINGS['client_config_file'] = 'C:\\Users\\Chris\\Documents\\Semester_8\\Bundesgartenschau\\Credentials.json'
-drive = GoogleDrive(gauth)
+def create_csv(date):
+    if(os.path.exists(f"/home/buga/Data/{date}_Temperatures.csv")):
+        return
+    else:
+        csv = pd.DataFrame(columns = ["Uhrzeit", "Temperatur_20m", "Temperatur_15m", "ueber_30_C"])
+        csv.to_csv(f"/home/buga/Data/{date}_Temperatures.csv", sep=";", index = False)
+    #csv.to_csv(f"/wetter-screen/Data/Temperatur_{datum}.csv", sep = ";")
 
-#gfile = drive.CreateFile({'title': 'allgemeine-informationen.txt','parents': [{'id': '1NggFkhUZ1LmAEObTvGU7H9sfLc9QKW-B'}]})
-#gfile.SetContentFile('C:\\Users\\Chris\\Documents\\Semester_8\\Bundesgartenschau\\allgemeine-informationen.txt')
-#gfile.Upload()
-
-#file = drive.CreateFile({'id': '1H2gFWfNR_tKqlj7HGooZQZy9iZOC-QLt'})
-#content_string = file.getContentString()
-
-#print(content_string)
-#file_list = drive.ListFile({'q': "'{}' in parents and trashed=false".format('1NggFkhUZ1LmAEObTvGU7H9sfLc9QKW-B')}).GetList()
-#for file in file_list:
-#	print('title: %s, id: %s' % (file['title'], file['id']))
-
-file7 = drive.CreateFile({'id': '1MUtalibYpvJ1FBHQGzDC4wEW19xL0wZw'})
-content = file7.GetContentString()
-print(content)
-#file = drive.CreateFile({'id': '1NggFkhUZ1LmAEObTvGU7H9sfLc9QKW-B'})
-#file.GetContentFile('test.txt')
+def import_values_to_csv(time, temperatureOutside, temperatureCorridor, above30):
+    dataframe = pd.read_csv(f"/home/buga/Data/{datetime.today().date()}_Temperatures.csv", sep = ";")
+    act_index = dataframe.index.max() + 1
+    dataframe.loc[act_index, "Uhrzeit"] = time
+    dataframe.loc[act_index, "Temperatur_20m"] = temperatureOutside
+    dataframe.loc[act_index, "Temperatur_15m"] = temperatureCorridor
+    dataframe.loc[act_index, "ueber_30_C"] = above30
+    dataframe.to_csv(f"/home/buga/Data/{datetime.today().date()}_Temperatures.csv",  sep=";", index = False)
