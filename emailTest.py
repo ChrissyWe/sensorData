@@ -13,7 +13,7 @@ msg['To'] = 'buga-sensor@gmx.de'
 # Set text content
 msg.set_content(f'Hallo,\nIm Anhang befindet sich die Mail für die Temperaturen von {datetime.today()}.')
 
-filename = r"C:\Users\Chris\Documents\Semester_8\Bundesgartenschau\2023-07-01_Temperatures.csv"
+filename = f"/home/buga/Data/{datetime.today().date()}_Temperatures.csv"
 
 with open(filename, 'rb') as fp:
     file_data = fp.read()
