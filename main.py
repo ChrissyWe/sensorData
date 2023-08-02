@@ -16,7 +16,7 @@ while 1:
     tempdata = inhalt.split("\n")[1].split(" ")[9]
     temperatur = float(tempdata[2:])
     temperatur = temperatur / 1000
-    tempdata_15m = inhalt.split("\n")[1].split(" ")[9]
-    temperatur_15m = float(tempdata[2:])
+    tempdata_15m = inhalt_15m.split("\n")[1].split(" ")[9]
+    temperatur_15m = float(tempdata_15m[2:])
     temperatur_15m = temperatur/1000
     driveTest.import_values_to_csv(datetime.now(), temperatur, temperatur_15m, 0)
